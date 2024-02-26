@@ -22,8 +22,8 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import Stacknavigation from './src/navigation/Stacknavigation';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from './src/screens/Home';
-import Comments from './src/screens/Comments';
+import Home from './src/screens/HomeScreen';
+import Comments from './src/screens/CommentsScreen';
 const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {

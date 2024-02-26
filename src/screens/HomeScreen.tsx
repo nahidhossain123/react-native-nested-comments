@@ -7,7 +7,7 @@ interface HomeScreenProps {
   navigation: NativeStackNavigationProp<RootStackPramList, 'Home'>;
 }
 
-export default function Home({navigation}: HomeScreenProps) {
+export default function HomeScreen({navigation}: HomeScreenProps) {
   return (
     <View>
       <Button

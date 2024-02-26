@@ -3,18 +3,37 @@ import React from 'react';
 import {getNameInitials} from '../utils/functions';
 
 interface avatarType {
-  name: string;
-  image: string;
+  user: {
+    name: string;
+    image?: string;
+  };
+  isName?: boolean;
 }
 
 export default function UserAvatar(props: avatarType) {
-  const nameInittials = getNameInitials(props.name);
+  const nameInittials = getNameInitials(props.user.name);
   return (
-    <View>
-      {props.image ? (
-        <Image source={{uri: props.image}} />
-      ) : (
-        <Text>{props.name}</Text>
+    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View
+        style={{
+          backgroundColor: '#000',
+
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        {props.user.image ? (
+          <Image source={{uri: props.user.image}} />
+        ) : (
+          <Text style={{fontWeight: 'bold', fontSize: 25, color: '#FFF'}}>
+            {nameInittials}
+          </Text>
+        )}
+      </View>
+      {props.isName && (
+        <Text style={{color: '#000', marginLeft: 10}}>{props.user.name}</Text>
       )}
     </View>
   );

@@ -5,24 +5,30 @@ import {
   StatusBar,
   StyleSheet,
   FlatList,
+  TextInput,
+  Image,
 } from 'react-native';
 import React, {useState} from 'react';
 import UserAvatar from '../components/UserAvatar';
+import RenderComment from '../components/RenderComment';
 
 const CommentList = [
   {
+    id: 1,
     text: 'comment 1',
     user: {
       name: 'Nahid Hossain',
     },
   },
   {
+    id: 2,
     text: 'comment 2',
     user: {
       name: 'Nahid Hossain',
     },
   },
   {
+    id: 3,
     text: 'comment 3',
     user: {
       name: 'Nahid Hossain',
@@ -30,32 +36,29 @@ const CommentList = [
   },
 ];
 
-interface RenderItemType {
-  item: {
-    text: string;
-    user: {
-      name: string;
-      image: string;
-    };
-  };
-  index: number;
-}
-const RenderItem = (porps: RenderItemType) => {
+export default function CommentsScreen() {
   return (
-    <View>
-      <UserAvatar user={porps.item.user} />
-    </View>
-  );
-};
-
-export default function Comments() {
-  return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, padding: 10, backgroundColor: '#FFF'}}>
       <StatusBar animated={true} backgroundColor="transparent" />
       <FlatList
         data={CommentList}
-        renderItem={({item, index}) => <RenderItem item={item} index={index} />}
+        renderItem={({item, index}) => (
+          <RenderComment item={item} index={index} />
+        )}
       />
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <TextInput
+          placeholderTextColor={'#64676B'}
+          placeholder="Comment here..."
+          style={{
+            flex: 1,
+            backgroundColor: '#F0F2F5',
+            borderRadius: 30,
+            paddingHorizontal: 20,
+          }}
+        />
+        <Image source={require('../assets/send.png')} />
+      </View>
     </SafeAreaView>
   );
 }
