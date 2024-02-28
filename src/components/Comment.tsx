@@ -23,6 +23,7 @@ export default function Comment(props: RenderItemType) {
             <Text style={{color: '#000'}}>{props.item.text}</Text>
           </View>
           <LikeShareActions />
+          <Text>Show Replies</Text>
         </View>
       </View>
     </View>

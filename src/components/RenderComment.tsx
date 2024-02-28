@@ -19,7 +19,6 @@ export default function RenderComment(props: RenderItemType) {
   return (
     <View>
       <Comment item={props.item} index={props.index} />
-
       {levelComments?.map(item => (
         <View>
           <RenderComment item={item} index={props.index} />
