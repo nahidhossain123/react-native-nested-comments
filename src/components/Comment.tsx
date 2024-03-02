@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import React from 'react';
 import UserAvatar from './UserAvatar';
 import LikeShareActions from './LikeShareActions';
@@ -10,7 +10,7 @@ export default function Comment(props: RenderItemType) {
       <View
         style={{
           flexDirection: 'row',
-          marginBottom: 10,
+          marginBottom: 5,
           alignItems: 'flex-start',
         }}>
         <UserAvatar user={props.item.user} />
@@ -23,7 +23,10 @@ export default function Comment(props: RenderItemType) {
             <Text style={{color: '#000'}}>{props.item.text}</Text>
           </View>
           <LikeShareActions />
-          <Text>Show Replies</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Image source={require('../assets/reply.png')} />
+            <Text style={{color: '#000'}}>View 1 Reply</Text>
+          </View>
         </View>
       </View>
     </View>
