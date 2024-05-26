@@ -11,10 +11,12 @@ import {
 import React, {useState} from 'react';
 import UserAvatar from '../components/UserAvatar';
 import RenderComment from '../components/RenderComment';
+import CommentInput from '../components/CommentInput';
 
 const CommentList = [
   {
     id: 1,
+    parentId:'',
     text: 'comment 1',
     user: {
       name: 'Nahid Hossain',
@@ -22,6 +24,7 @@ const CommentList = [
   },
   {
     id: 2,
+    parentId:'',
     text: 'comment 2',
     user: {
       name: 'Nahid Hossain',
@@ -29,36 +32,70 @@ const CommentList = [
   },
   {
     id: 3,
+    parentId:'',
+    text: 'comment 3',
+    user: {
+      name: 'Nahid Hossain',
+    },
+  },
+  {
+    id: 11,
+    parentId:1,
+    text: 'comment 1',
+    user: {
+      name: 'Nahid Hossain',
+    },
+  },
+  {
+    id: 22,
+    parentId:1,
+    text: 'comment 1',
+    user: {
+      name: 'Nahid Hossain',
+    },
+  },
+  {
+    id: 33,
+    parentId:1,
+    text: 'comment 1',
+    user: {
+      name: 'Nahid Hossain',
+    },
+  },
+  {
+    id: 44,
+    parentId:2,
+    text: 'comment 2',
+    user: {
+      name: 'Nahid Hossain',
+    },
+  },
+  {
+    id: 55,
+    parentId:3,
     text: 'comment 3',
     user: {
       name: 'Nahid Hossain',
     },
   },
 ];
-
 export default function CommentsScreen() {
+  const [comments,setComments] = useState(CommentList)
+  const addComment = (cmt)=>{
+
+  }
+  console.log("newComment",comments)
   return (
     <SafeAreaView style={{flex: 1, padding: 10, backgroundColor: '#FFF'}}>
       <StatusBar animated={true} backgroundColor="transparent" />
       <FlatList
-        data={CommentList}
+        showsVerticalScrollIndicator={false}
+        data={comments}
         renderItem={({item, index}) => (
-          <RenderComment item={item} index={index} />
+         !item.parentId &&<RenderComment item={item} index={index} />
         )}
       />
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <TextInput
-          placeholderTextColor={'#64676B'}
-          placeholder="Comment here..."
-          style={{
-            flex: 1,
-            backgroundColor: '#F0F2F5',
-            borderRadius: 30,
-            paddingHorizontal: 20,
-          }}
-        />
-        <Image source={require('../assets/send.png')} />
-      </View>
+      <CommentInput callback={(obj)=>setComments(prevState=>([...prevState,obj]))} />
     </SafeAreaView>
   );
 }
