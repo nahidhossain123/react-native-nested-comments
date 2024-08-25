@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import UserAvatar from './UserAvatar';
 import LikeShareActions from './LikeShareActions';
 import Comment from './Comment';
+import { comment } from '../screens/CommentsScreen';
 export interface RenderItemType {
   item: {
     text: string;
@@ -10,17 +11,17 @@ export interface RenderItemType {
       name: string;
       image?: string;
     };
+    children:comment[]
   };
   index: number;
 }
 
 export default function RenderComment(props: RenderItemType) {
-  const [levelComments, setLevelComments] = useState([]);
   return (
     <View>
       <Comment item={props.item} index={props.index} />
-      {levelComments?.map(item => (
-        <View>
+      {props.item.children?.map(item => (
+        <View style={{marginLeft:50}}>
           <RenderComment item={item} index={props.index} />
         </View>
       ))}

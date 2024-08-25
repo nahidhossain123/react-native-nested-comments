@@ -1,17 +1,24 @@
 import { View, Text, TextInput, Image, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { Children, useState } from 'react'
+import { commentCallbackFn } from '../screens/CommentsScreen'
 
-const CommentInput = ({ callback }) => {
+interface PropsType{
+    callback:commentCallbackFn
+}
+
+const CommentInput = ({ callback }:PropsType) => {
     const [cmtText, setCmtText] = useState('')
     const newComment = () => {
         callback({
-            id: new Date(),
+            id: (new Date()).toString(),
             parentId: '',
             text: cmtText,
+            children:[],
             user: {
                 name: 'Nahid Hossain',
             },
         })
+        setCmtText('')
     }
     return (
         <View>
@@ -20,6 +27,7 @@ const CommentInput = ({ callback }) => {
                     placeholderTextColor={'#64676B'}
                     placeholder="Comment here..."
                     onChange={(event) => setCmtText(event.nativeEvent.text)}
+                    defaultValue={cmtText}
                     style={{
                         flex: 1,
                         backgroundColor: '#F0F2F5',
