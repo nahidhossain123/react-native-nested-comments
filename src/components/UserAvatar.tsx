@@ -17,7 +17,6 @@ export default function UserAvatar(props: avatarType) {
       <View
         style={{
           backgroundColor: '#000',
-
           width: 50,
           height: 50,
           borderRadius: 25,

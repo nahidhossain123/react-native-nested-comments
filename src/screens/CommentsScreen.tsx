@@ -9,7 +9,7 @@ import {
   Image,
   Keyboard,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import UserAvatar from '../components/UserAvatar';
 import RenderComment from '../components/RenderComment';
 import CommentInput from '../components/CommentInput';
@@ -17,75 +17,75 @@ import CommentInput from '../components/CommentInput';
 const CommentList = [
   {
     id: '1',
-    parentId:'',
+    parentId: '',
     text: 'comment 1',
     user: {
       name: 'Nahid Hossain',
     },
-    children:[],
+    children: [],
   },
   {
     id: '2',
-    parentId:'',
+    parentId: '',
     text: 'comment 2',
     user: {
       name: 'Nahid Hossain',
     },
-    children:[],
+    children: [],
   },
   {
     id: '3',
-    parentId:'',
+    parentId: '',
     text: 'comment 3',
     user: {
       name: 'Nahid Hossain',
     },
-    children:[],
+    children: [],
   },
   {
     id: '11',
-    parentId:'1',
+    parentId: '1',
     text: 'comment 1',
     user: {
       name: 'Nahid Hossain',
     },
-    children:[],
+    children: [],
   },
   {
     id: '22',
-    parentId:'1',
+    parentId: '1',
     text: 'comment 1',
     user: {
       name: 'Nahid Hossain',
     },
-    children:[],
+    children: [],
   },
   {
     id: '33',
-    parentId:'1',
+    parentId: '1',
     text: 'comment 1',
     user: {
       name: 'Nahid Hossain',
     },
-    children:[],
+    children: [],
   },
   {
     id: '44',
-    parentId:'2',
+    parentId: '2',
     text: 'comment 2',
     user: {
       name: 'Nahid Hossain',
     },
-    children:[],
+    children: [],
   },
   {
     id: '55',
-    parentId:'3',
+    parentId: '3',
     text: 'comment 3',
     user: {
       name: 'Nahid Hossain',
     },
-    children:[],
+    children: [],
   },
 ];
 
@@ -93,56 +93,76 @@ export type comment = {
   id: string,
   parentId: string,
   text: string,
-  children:comment[],
+  children: comment[],
   user: {
-      name: string
+    name: string
   },
 }
 
-export type commentCallbackFn=(param:comment)=>void
+export type commentCallbackFn = (param: comment) => void
 
 export default function CommentsScreen() {
-  const [comments,setComments] = useState<comment[]>(CommentList)
-  const addComment = (cmt:comment)=>{
+  const [comments, setComments] = useState<comment[]>([])
 
-  }  
-  
-  const createNestedArray = ()=>{
-    const commentsHashMap:{[id:string]:comment}={}
-    CommentList.forEach(item=>{
-      commentsHashMap[item.id]=item
+  const findParent = (comments:comment[],newComment:comment,parentId:string,isReply:boolean)=>{
+    if(isReply){
+      for(let i=0;i<comments.length;i++){
+        if(comments[i].id == parentId){
+           
+        }
+      }
+      for(let i=0;i<comments.length;i++){
+        findParent(comments[i].children,newComment,parentId,isReply)
+      }
+    }else{
+      setComments(prevState => ([...prevState, newComment]))
+    }
+  }
+
+  const addComment = (cmt: comment) => {
+    Keyboard.dismiss()
+    findParent()
+  }
+  const deleteComment = (cmt: comment) => {
+
+  }
+
+  const createNestedArray = () => {
+    const commentsHashMap: { [id: string]: comment } = {}
+    CommentList.forEach(item => {
+      commentsHashMap[item.id] = item
     })
     const result: comment[] = [];
-    CommentList.forEach(item=>{
-      if(item.parentId){
+    CommentList.forEach(item => {
+      if (item.parentId) {
         let parent = commentsHashMap[item.parentId]
         parent.children.push(item)
-      }else{
+      } else {
         result.push(commentsHashMap[item.id])
       }
     })
-    console.log('NestedArray',result)
+    console.log('NestedArray', result)
+    setComments(result)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     createNestedArray()
-  },[])
+  }, [])
 
 
-  console.log("newComment",comments)
+  console.log("newComment", comments)
   return (
-    <SafeAreaView style={{flex: 1, padding: 10, backgroundColor: '#FFF'}}>
+    <SafeAreaView style={{ flex: 1, padding: 10, backgroundColor: '#FFF' }}>
       <StatusBar animated={true} backgroundColor="transparent" />
       <FlatList
         showsVerticalScrollIndicator={false}
         data={comments}
-        renderItem={({item, index}:{item:comment,index:number}) => (
-         <RenderComment item={item} index={index} />
+        renderItem={({ item, index }: { item: comment, index: number }) => (
+          <RenderComment item={item} index={index} />
         )}
       />
-      <CommentInput callback={(obj:comment)=>{
-        Keyboard.dismiss()
-        setComments(prevState=>([...prevState,obj]))
+      <CommentInput callback={(obj: comment) => {
+       
       }} />
     </SafeAreaView>
   );
